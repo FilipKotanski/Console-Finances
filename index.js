@@ -86,3 +86,47 @@ var finances = [
   ['Jan-2017', 138230],
   ['Feb-2017', 671099],
 ];
+
+
+let totalMonths, netTotal, avgChange, profitMsg, lossMsg, monthlyChange, totalChange, maxPositiveChange, maxNegativeChange;
+
+//calculating the total number of months in finances data set
+totalMonths = finances.length;
+
+//calculating the net total profit/loss over the entire period
+for(i=0, netTotal=0; i < totalMonths; i++){
+  netTotal += finances[i][1];
+}
+  
+//clalculating:
+//- the total of the changes in profit/losses over the entire period
+for(i = 0, totalChange = 0, maxPositiveChange = -Infinity, maxNegativeChange = Infinity; i < totalMonths - 1; i++){
+  monthlyChange = finances[i+1][1] - finances[i][1];
+  totalChange += monthlyChange;
+
+  //- the greatest positive change in profit/losses over the entire period
+  if(monthlyChange > maxPositiveChange){
+    maxPositiveChange = monthlyChange;
+    profitMsg = finances[i+1][0] + ' ' + '$' + maxPositiveChange;
+  }
+
+  //- the greatest negative change in profit/losses  over the entire period
+  if(monthlyChange < maxNegativeChange){
+    maxNegativeChange = monthlyChange;
+    lossMsg = finances[i+1][0] + ' ' + '$' + maxNegativeChange;
+  }  
+}
+
+netTotal = '$' + netTotal;
+avgChange = '$' + (totalChange / (totalMonths - 1)).toFixed(2);
+
+
+
+
+console.log('Financial Analysis');
+console.log('------------------');
+console.log('Total Months: ' + totalMonths);
+console.log('Total: ' + netTotal);
+console.log('Average Change: '+ avgChange);
+console.log('Greatest Increase in Profits/Losses: '  + profitMsg);
+console.log('Greatest Decrease in Profits/Losses: '  + lossMsg);
